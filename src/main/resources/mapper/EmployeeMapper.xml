@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.lhx.dao.EmployeeDao">
+
+    <!--自定义映射-->
+    <resultMap id="BaseResultMap" type="Employee">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="password" column="password"/>
+        <result property="email" column="email"/>
+        <result property="age" column="age"/>
+        <result property="admin" column="admin"/>
+        <result property="deptId" column="dept_id"/>
+        <!--员工部门表一对多映射-->
+        <association property="dept" javaType="Department" >
+            <id column="d_id" property="id"/>
+            <result column="d_name" property="name"/>
+            <result column="d_sn" property="sn"/>
+        </association>
+        <!--员工角色表多多映射-->
+        <collection property="roles" column="id"
+                    select="cn.lhx.dao.RoleDao.selectByEmployeeId">
+
+        </collection>
+
+
+
+    </resultMap>
+
+
+    <!--
+        useGeneratedKeys：对于支持自动生成记录主键的数据库，如：MySQL，SQL Server，此时设置useGeneratedKeys参数值为true，
+        在执行添加记录之后可以获取到数据库自动生成的主键ID；
+        keyProperty：配合useGeneratedKeys=“true”来使用，将自动成的逐渐封装到JavaBean的id中
+    -->
+    <insert id="insert" keyProperty="id" parameterType="Employee" useGeneratedKeys="true">
+        INSERT INTO employee(name, password, email, age, admin, dept_id)
+        values (#{name}, #{password}, #{email}, #{age}, #{admin}, #{deptId})
+    </insert>
+
+    <select id="listAll" resultMap="BaseResultMap">
+        SELECT e.id,
+               e.name,
+               e.password,
+               e.email,
+               e.age,
+               e.admin,
+               d.id   d_id,
+               d.name d_name
+        FROM employee e
+                 LEFT JOIN department d ON e.dept_id = d.id
+
+    </select>
+
+    <!--模糊查询 -->
+    <select id="selectList" resultMap="BaseResultMap">
+        SELECT e.id,
+               e.name,
+               e.password,
+               e.email,
+               e.age,
+               e.admin,
+               d.id   d_id,
+               d.name d_name
+        FROM employee e
+                 LEFT JOIN department d ON e.dept_id = d.id
+        <where>
+            <if test="keyword!=null and keyword!=''">
+                and (e.name like concat('%',#{keyword},'%') or e.email like concat('%',#{keyword},'%'))
+            </if>
+            <if test="deptId > 0">
+                and e.dept_id = #{deptId}
+            </if>
+
+        </where>
+
+    </select>
+
+    <update id="update">
+        UPDATE employee
+        SET name=#{name},
+            email=#{email},
+            age=#{age},
+            admin=#{admin},
+            dept_id=#{deptId}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteById" parameterType="int">
+        DELETE FROM employee WHERE id=#{id}
+    </delete>
+
+    <select id="selectById" resultMap="BaseResultMap">
+
+        SELECT e.id,
+               e.name,
+               e.password,
+               e.email,
+               e.age,
+               e.admin,
+               d.id   d_id,
+               d.name d_name
+        FROM employee e
+                 LEFT JOIN department d ON e.dept_id = d.id
+        WHERE e.id = #{id}
+    </select>
+
+    <select id="login" resultMap="BaseResultMap">
+      select * FROM employee where name=#{name} and password=#{password}
+    </select>
+
+</mapper>
