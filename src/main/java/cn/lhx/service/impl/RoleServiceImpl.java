@@ -31,4 +31,9 @@ public class RoleServiceImpl implements RoleService {
     public List<Role> listAll() {
         return roleDao.listAll();
     }
+
+    @Override
+    public Role selectById(Long id) {
+        return roleDao.selectById(id);
+    }
 }

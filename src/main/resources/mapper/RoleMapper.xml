@@ -28,11 +28,6 @@
         where id = #{id}
     </update>
 
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
-        select id, name, sn
-        from role
-        where id = #{id}
-    </select>
 
     <select id="listAll" resultMap="BaseResultMap">
         select id, name, sn
@@ -41,8 +36,15 @@
     <select id="selectByEmployeeId" resultMap="BaseResultMap">
         select r.id, r.name,r.sn
         from role r
-                 join employee_role er on r.id = er.role_id
-        where er.employee_id = #{emloyeeId}
+                 left join employee_role er on r.id = er.role_id
+        where er.employee_id = #{id}
+
+    </select>
+
+    <select id="selectById" parameterType="cn.lhx.entity.Role" resultMap="BaseResultMap">
+        select id, name, sn
+        from role
+        where id = #{id}
 
     </select>
 

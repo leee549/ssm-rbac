@@ -17,10 +17,19 @@ public class RoleController {
     private RoleService roleService;
 
     @RequestMapping("/list")
-    public String listAll(Model model, QueryObject qo){
+    public String listAll(Model model, QueryObject qo) {
         PageInfo<Role> result = roleService.query(qo);
-        model.addAttribute("result",result);
+        model.addAttribute("result", result);
 
         return "/role/list";
+    }
+
+    @RequestMapping("/input")
+    public String input(Long id, Model model) {
+        if (id != null){
+            Role role = roleService.selectById(id);
+            model.addAttribute("role",role);
+        }
+        return "role/input";
     }
 }

@@ -1,157 +1,117 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>部门管理</title>
-    <jsp:include page="/WEB-INF/views/common/link.jsp"/>
-    <script>
-
-        $(function () {
-            var permissionDiv;
-            $("#admin").click(function () {
-                if (this.checked) {
-                    permissionDiv = $("#permission").detach();
-                } else {
-                    $(this).closest("div").after(permissionDiv);
-                }
-            })
-
-
-            ///提交表单, 全选自己角色下拉框
-            $("#btn-submit").click(function () {
-
-
-                //全选自己角色下拉框
-                $(".selfPermissions option").prop("selected", true);
-
-                //表单提交
-                $("#editForm").submit();
-            });
-
-            var ids = $.map($(".selfPermissions option"), function (option) {
-                return option.value;
-            });
-            //2:将系统的角色[id]也全部获取出来
-            var allPermissions = $(".allPermissions option");
-            $.each(allPermissions, function (index, item) {
-                if ($.inArray(item.value, ids) >= 0) {
-                    //3.1: 如果存在, 删除当前比较系统角色
-                    $(item).remove();
-                } else {
-                    //3.2: 如果不存在, 保留
-                }
-            });
-            if ($("#admin").prop("checked")) {
-                permissionDiv = $("#permission").detach();
-            }
-        })
-        //全部移动
-        function moveAll(srcCls, targetCls) {
-            $("." + srcCls + " option").appendTo($("." + targetCls));
-        }
-        //选中移动
-        function moveSelected(srcCls, targetCls) {
-            $("." + srcCls + " option:selected").appendTo($("." + targetCls));
-        }
-    </script>
+    <%@include file="../common/header.jsp"%>
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
-<div class="wrapper">
-    <%@include file="/WEB-INF/views/common/navbar.jsp" %>
-    <!--菜单回显-->
-    <c:set var="currentMenu" value="permission"/>
-    <%@include file="/WEB-INF/views/common/menu.jsp" %>
-    <div class="content-wrapper">
-        <section class="content-header">
-            <h1>角色编辑</h1>
-        </section>
-        <section class="content">
-            <div class="box" style="padding: 10px;">
+<body>
+
+<div class="container " style="margin-top: 20px">
+    <%@include file="../common/top.jsp"%>
+    <div class="row">
+        <div class="col-sm-3">
+            <c:set var="menu" value="role"/>
+            <%@include file="../common/menu.jsp"%>
+        </div>
+        <div class="col-sm-9">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h1 class="page-head-line">角色编辑</h1>
+                </div>
+            </div>
+            <div class="row col-sm-10">
                 <form class="form-horizontal" action="/role/saveOrUpdate" method="post" id="editForm">
-                    <input type="hidden" value="${entity.id}" name="id">
-                    <div class="form-group" style="margin-top: 10px;">
-                        <label for="name" class="col-sm-2 control-label">角色名称：</label>
+                    <input type="hidden" value="${role.id}" name="id">
+                    <div class="form-group" >
+                        <label class="col-sm-2 control-label">角色名称：</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" id="name" name="name" value="${entity.name}"
-                                   placeholder="请输入角色名称">
+                        <input type="text" class="form-control" name="name" value="${role.name}" placeholder="请输入角色名称">
                         </div>
-                    </div>
-                    <div class="form-group" style="margin-top: 10px;">
-                        <label for="sn" class="col-sm-2 control-label">角色编码：</label>
-                        <div class="col-sm-6">
-                            <input type="text" class="form-control" id="sn" name="sn" value="${entity.sn}"
-                                   placeholder="请输入角色编码">
-                        </div>
-                    </div>
-                   
-                    <div class="form-group " id="permission">
-                        <label for="permission" class="col-sm-2 control-label">分配权限：</label><br/>
-                        <div class="row" style="margin-top: 10px">
-                            <div class="col-sm-2 col-sm-offset-2">
-                                <select multiple class="form-control allPermissions" size="15">
-                                    <c:forEach items="${permissions}" var="p">
-                                        <option value="${p.id}">${p.name}</option>
-                                    </c:forEach>
-                                </select>
-                            </div>
-
-                            <div class="col-sm-1" style="margin-top: 60px;" align="center">
-                                <div>
-
-                                    <a type="button" class="btn btn-primary  " style="margin-top: 10px" title="右移动"
-                                       onclick="moveSelected('allPermissions', 'selfPermissions')">
-                                        <span class="glyphicon glyphicon-menu-right"></span>
-                                    </a>
-                                </div>
-                                <div>
-                                    <a type="button" class="btn btn-primary " style="margin-top: 10px" title="左移动"
-                                       onclick="moveSelected('selfPermissions', 'allPermissions')">
-                                        <span class="glyphicon glyphicon-menu-left"></span>
-                                    </a>
-                                </div>
-                                <div>
-                                    <a type="button" class="btn btn-primary " style="margin-top: 10px" title="全右移动"
-                                       onclick="moveAll('allPermissions', 'selfPermissions')">
-                                        <span class="glyphicon glyphicon-forward"></span>
-                                    </a>
-                                </div>
-                                <div>
-                                    <a type="button" class="btn btn-primary " style="margin-top: 10px" title="全左移动"
-                                       onclick="moveAll('selfPermissions', 'allPermissions')">
-                                        <span class="glyphicon glyphicon-backward"></span>
-                                    </a>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-2">
-                                <select multiple class="form-control selfPermissions" size="15" name="ids">
-                                    <c:forEach items="${entity.permissions}" var="r">
-                                        <option value="${r.id}">${r.name}</option>
-                                    </c:forEach>
-                                </select>
-                            </div>
-
-                        </div>
-
                     </div>
                     <div class="form-group">
-                        <div class="col-sm-offset-1 col-sm-6">
-                            <button id="btn-submit" type="button" class="btn btn-primary">保存</button>
-                            <button type="reset" class="btn btn-danger">重置</button>
+                        <label class="col-sm-2 control-label">角色编码：</label>
+                        <div class="col-sm-6">
+                        <input type="text" class="form-control" name="sn" value="${role.sn}" placeholder="请输入角色编码">
                         </div>
                     </div>
 
+                    <div class="form-group" id="role">
+                        <div>
+                            <label class="control-label" style="margin-left: 60px">权限：</label>
+                        </div>
+                        <div class="row" style="margin-top: 10px">
+                            <div class="col-sm-4 col-sm-offset-1">
+                                <select multiple class="form-control allPermissions" size="15">
+                                    <%--系统中拥有的所有权限--%>
+                                    <%--<c:forEach var="perm" items="${permissions}">--%>
+                                        <%--<option value="${perm.id}">${perm.name}</option>--%>
+                                    <%--</c:forEach>--%>
+                                </select>
+                            </div>
+                            <div class="col-sm-2" style="margin-top: 60px;" align="center">
+                                <div >
+                                    <a type="button" class="btn btn-info  "  style="margin-top: 10px"
+                                       onclick="moveSelected('allPermissions', 'selfPermissions')">&nbsp;&gt;&nbsp;</a>
+                                    <br>
+                                    <a type="button" class="btn btn-info " style="margin-top: 10px"
+                                       onclick="moveSelected('selfPermissions', 'allPermissions')">&nbsp;&lt;&nbsp;</a>
+                                    <br>
+                                    <a type="button" class="btn btn-info " style="margin-top: 10px"
+                                       onclick="moveAll('allPermissions', 'selfPermissions')">&gt;&gt;</a>
+                                    <br>
+                                    <a type="button" class="btn btn-info " style="margin-top: 10px"
+                                       onclick="moveAll('selfPermissions', 'allPermissions')">&lt;&lt;</a>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <select multiple class="form-control selfPermissions" size="15" name="ids">
+                                    <%--回显当前角色拥有的权限--%>
+                                        <%--<c:forEach var="permission" items="${role.pers}">--%>
+                                            <%--<option value="${permission.id}">${permission.name}</option>--%>
+                                        <%--</c:forEach> --%>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
 
+                    <div class="form-group">
+                        <div class="col-sm-offset-1 col-sm-6">
+                            <button id="btn_submit" type="button" class="btn btn-success">
+                                <span class="glyphicon glyphicon-saved"></span> 保存
+                            </button>
+                        </div>
+                    </div>
                 </form>
-
             </div>
-
-        </section>
+        </div>
     </div>
-    <%@include file="/WEB-INF/views/common/footer.jsp" %>
 </div>
+<script>
+    $(function(){
+        $('#btn_submit').click(function () {
+            //1:先选中右边select的所有选项
+            $('.selfPermissions option').prop('selected', true);
+            //2:提交表单
+            $('#editForm').submit();
+        });
+
+        //将右边已存在的权限,从左边select中移除
+        $.each($('.selfPermissions option'),function (index, ele) {
+            $('.allPermissions option[value="'+ele.value+'"]').remove();
+        });
+
+    });
+
+    //移动全部选项
+    function moveAll(rolesClass1, rolesClass2) {
+        $('.' + rolesClass1 + ' option').appendTo($('.' + rolesClass2));
+    }
+
+    //移动选中的选项
+    function moveSelected(rolesClass1, rolesClass2) {
+        $('.' + rolesClass1 + ' option:selected').appendTo($('.' + rolesClass2));
+    }
+</script>
 </body>
 </html>

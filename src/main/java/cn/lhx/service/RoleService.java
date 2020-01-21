@@ -12,4 +12,6 @@ public interface RoleService {
     PageInfo<Role> query(QueryObject qo);
 
     List<Role> listAll();
+
+    Role selectById(Long id);
 }

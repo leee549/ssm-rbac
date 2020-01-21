@@ -9,4 +9,6 @@ public interface RoleDao {
 
     List<Role> selectByEmployeeId(Long id);
 
+    Role selectById(Long id);
+
 }
