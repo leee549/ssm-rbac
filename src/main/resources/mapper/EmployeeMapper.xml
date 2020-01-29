@@ -110,5 +110,14 @@
     <select id="login" resultMap="BaseResultMap">
       select * FROM employee where name=#{name} and password=#{password}
     </select>
+    <!--删除旧的员工-角色关系 -->
+    <delete id="deleteRelation">
+        delete from employee_role
+        where employee_id=#{employeeId}
+    </delete>
+    <!-- 增加新的员工-角色关系-->
+    <insert id="insertRelation">
+        insert into employee_role(employee_id, role_id) value(#{employeeId},#{roleId});
+    </insert>
 
 </mapper>

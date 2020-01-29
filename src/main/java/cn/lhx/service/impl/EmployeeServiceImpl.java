@@ -22,37 +22,44 @@ public class EmployeeServiceImpl implements EmployeeService {
     private EmployeeDao employeeDao;
 
     private boolean isNotEmpty(QueryObject qo) {
-        return StrUtil.isNotEmpty(qo.getKeyword())|| ObjectUtil.isNotEmpty(qo.getDeptId());
+        return StrUtil.isNotEmpty(qo.getKeyword()) || ObjectUtil.isNotEmpty(qo.getDeptId());
     }
 
     @Override
     public PageInfo<Employee> query(QueryObject qo) {
         List<Employee> employee;
         PageHelper.startPage(qo.getCurrentPage(), qo.getPagesize());
-        if (isNotEmpty(qo)){
+        if (isNotEmpty(qo)) {
             employee = employeeDao.selectList(qo);
-        }else {
+        } else {
             employee = employeeDao.listAll();
         }
-            PageInfo<Employee> pageInfo = new PageInfo<>(employee);
+        PageInfo<Employee> pageInfo = new PageInfo<>(employee);
 
         return pageInfo;
     }
 
-//    @Override
-//    public List<Employee> listAll() {
-//
-//        return employeeDao.listAll();
-//    }
 
     @Override
-    public void save(Employee employee) {
+    public void save(Employee employee, Long[] ids) {
         employeeDao.insert(employee);
+        if (ids != null) {
+            for (Long roleId : ids) {
+                employeeDao.insertRelation(employee.getId(), roleId);
+            }
+        }
     }
 
     @Override
-    public void update(Employee employee) {
+    public void update(Employee employee, Long[] ids) {
         employeeDao.update(employee);
+        if (ids != null) {
+            employeeDao.deleteRelation(employee.getId());
+            for (Long roleId : ids) {
+                employeeDao.insertRelation(employee.getId(), roleId);
+            }
+        }
+
     }
 
     @Override

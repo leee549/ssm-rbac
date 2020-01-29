@@ -37,13 +37,11 @@ public class EmployeeController {
     }
 
     @RequestMapping("/saveOrUpdate")
-    public String saveOrUpdate(Employee employee) {
+    public String saveOrUpdate(Employee employee,Long[] ids) {
         if (employee.getId() != null) {
-            employeeService.update(employee);
-            // System.out.println("=========拿到id=========");
+            employeeService.update(employee,ids);
         } else {
-            employeeService.save(employee);
-            //System.out.println("拿不到id=============");
+            employeeService.save(employee,ids);
         }
         return "redirect:/employee/list";
 

@@ -2,6 +2,7 @@ package cn.lhx.dao;
 
 import cn.lhx.entity.Employee;
 import cn.lhx.utils.page.QueryObject;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -19,4 +20,8 @@ public interface EmployeeDao {
     Employee login(Employee employee);
 
     List<Employee> selectList(QueryObject qo);
+    // 新增新的员工-角色关系
+    void insertRelation(@Param("employeeId")Long employeeId, @Param("roleId")Long roleId);
+    // 删除旧的员工-角色关系
+    void deleteRelation(@Param("employeeId")Long id);
 }

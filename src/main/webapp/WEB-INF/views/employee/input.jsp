@@ -117,9 +117,11 @@
                             <div class="col-sm-4">
                                 <select multiple class="form-control selfRoles" size="15" name="ids">
                                     <%--显示当前用户拥有的角色--%>
-                                    <%--<c:forEach var="role" items="${emp.roles}">--%>
-                                        <%--<option value="${role.id}">${role.name}</option>--%>
-                                    <%--</c:forEach>--%>
+                                    <c:if test="${!empty emp}">
+                                   <c:forEach var="role" items="${emp.roles}">
+                                        <option value="${role.id}">${role.name}</option>
+                                    </c:forEach>
+                                    </c:if>
                                 </select>
                             </div>
                         </div>
