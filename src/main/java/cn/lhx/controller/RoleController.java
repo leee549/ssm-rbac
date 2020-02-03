@@ -1,6 +1,8 @@
 package cn.lhx.controller;
 
+import cn.lhx.entity.Permission;
 import cn.lhx.entity.Role;
+import cn.lhx.service.PermissionService;
 import cn.lhx.service.RoleService;
 import cn.lhx.utils.page.QueryObject;
 import com.github.pagehelper.PageInfo;
@@ -9,12 +11,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.annotation.Resource;
+
 @Controller
 @RequestMapping("/role")
 public class RoleController {
 
-    @Autowired
+    @Resource
     private RoleService roleService;
+    @Resource
+    private PermissionService permissionService;
 
     @RequestMapping("/list")
     public String listAll(Model model, QueryObject qo) {
@@ -26,10 +32,10 @@ public class RoleController {
 
     @RequestMapping("/input")
     public String input(Long id, Model model) {
-        if (id != null){
-            Role role = roleService.selectById(id);
-            model.addAttribute("role",role);
+        if (id != null) {
+            model.addAttribute("role", roleService.selectById(id));
         }
+        model.addAttribute("permissions", permissionService.listAll());
         return "role/input";
     }
 }

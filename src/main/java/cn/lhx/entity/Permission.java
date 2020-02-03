@@ -4,17 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Role {
-
+public class Permission {
     private Long id;
     private String name;
-    private String sn;
-    private List<Permission> pers = new ArrayList<Permission>();
+    private String expression;
 
 }

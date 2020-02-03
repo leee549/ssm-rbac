@@ -44,9 +44,9 @@
                             <div class="col-sm-4 col-sm-offset-1">
                                 <select multiple class="form-control allPermissions" size="15">
                                     <%--系统中拥有的所有权限--%>
-                                    <%--<c:forEach var="perm" items="${permissions}">--%>
-                                        <%--<option value="${perm.id}">${perm.name}</option>--%>
-                                    <%--</c:forEach>--%>
+                                    <c:forEach var="perm" items="${permissions}">
+                                        <option value="${perm.id}">${perm.name}</option>
+                                    </c:forEach>
                                 </select>
                             </div>
                             <div class="col-sm-2" style="margin-top: 60px;" align="center">
@@ -66,10 +66,10 @@
                             </div>
                             <div class="col-sm-4">
                                 <select multiple class="form-control selfPermissions" size="15" name="ids">
-                                    <%--回显当前角色拥有的权限--%>
-                                        <%--<c:forEach var="permission" items="${role.pers}">--%>
-                                            <%--<option value="${permission.id}">${permission.name}</option>--%>
-                                        <%--</c:forEach> --%>
+                                    回显当前角色拥有的权限
+                                        <c:forEach var="permission" items="${role.pers}">
+                                            <option value="${permission.id}">${permission.name}</option>
+                                        </c:forEach>
                                 </select>
                             </div>
                         </div>

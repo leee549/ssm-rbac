@@ -21,7 +21,7 @@
                 </div>
             </div>
             <!--高级查询--->
-            <form class="form-inline" id="searchForm" action="/permission/page" method="post">
+            <form class="form-inline" id="searchForm" action="/permission/list" method="post">
                 <input type="hidden" name="currentPage" id="currentPage" value="1">
                 <a href="/permission/reload" class="btn btn-success">
                     <span class="glyphicon glyphicon-refresh"></span> 重新加载权限
@@ -34,7 +34,7 @@
                     <th>权限名称</th>
                     <th>权限表达式</th>
                 </tr>
-                <c:forEach items="${page.data}" var="permission" varStatus="vs">
+                <c:forEach items="${result.list}" var="permission" varStatus="vs">
                     <tr>
                        <td>${vs.count}</td>
                        <td>${permission.name}</td>

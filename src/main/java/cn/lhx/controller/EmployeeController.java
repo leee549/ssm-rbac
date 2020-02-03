@@ -2,7 +2,6 @@ package cn.lhx.controller;
 
 import cn.lhx.entity.Department;
 import cn.lhx.entity.Employee;
-import cn.lhx.entity.Role;
 import cn.lhx.service.DepartmentService;
 import cn.lhx.service.EmployeeService;
 import cn.lhx.service.RoleService;
