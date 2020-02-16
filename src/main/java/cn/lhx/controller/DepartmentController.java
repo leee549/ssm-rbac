@@ -4,6 +4,7 @@ import cn.lhx.entity.Department;
 import cn.lhx.service.DepartmentService;
 import cn.lhx.utils.page.QueryObject;
 import com.github.pagehelper.PageInfo;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +19,7 @@ public class DepartmentController {
     private DepartmentService departmentService;
 
     @RequestMapping("/list")
+    @RequiresPermissions("department:list")
     public String listAll(Model model, QueryObject qo) {
         PageInfo<Department> result = departmentService.query(qo);
         model.addAttribute("result", result);
@@ -25,6 +27,7 @@ public class DepartmentController {
     }
 
     @RequestMapping("/saveOrUpdate")
+    @RequiresPermissions("department:saveOrUpdate")
     public String saveOrUpdate(Department department) {
         if (department.getId() != null) {
             departmentService.update(department);
@@ -36,6 +39,7 @@ public class DepartmentController {
     }
 
     @RequestMapping("/input")
+    @RequiresPermissions("department:input")
     public String input(Integer id, Model model) {
         if (id != null) {
             Department dept = departmentService.selectById(id);
@@ -45,6 +49,7 @@ public class DepartmentController {
     }
 
     @RequestMapping("/delete/{id}")
+    @RequiresPermissions("department:delete")
     public String delete(@PathVariable Integer id) {
         departmentService.delete(id);
         return "redirect:/department/list";

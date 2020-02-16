@@ -14,7 +14,7 @@ public class Employee {
     private String password;
     private String email;
     private int age;
-    private boolean admin;
+    private Boolean admin;
     private long deptId;
     private Department dept;
     private List<Role> roles;

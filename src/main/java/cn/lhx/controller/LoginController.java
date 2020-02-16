@@ -1,41 +1,58 @@
 package cn.lhx.controller;
 
+import cn.hutool.log.Log;
+import cn.lhx.base.AjaxResult;
 import cn.lhx.entity.Employee;
-import cn.lhx.service.EmployeeService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
 public class LoginController {
+    private Log log = Log.get();
 
-    @Autowired
-    private EmployeeService employeeService;
 
     @RequestMapping("/login")
     public String loginPage() {
-        return "/login";
+        return "login";
     }
 
     @ResponseBody
     @PostMapping("/auth/login")
-    public boolean login(Employee employee , HttpServletRequest request) {
-        if (null!= employeeService.login(employee).getId()) {
-           request.getSession().setAttribute("user",employeeService.login(employee));
-            return true;
-        }
-        return false;
+    public AjaxResult login(Employee employee) {
+
+       try {
+           Subject subject = SecurityUtils.getSubject();
+           UsernamePasswordToken token =
+                   new UsernamePasswordToken(employee.getName(),
+                           employee.getPassword(),
+                           false);
+           subject.login(token);
+       }catch (UnknownAccountException | IncorrectCredentialsException e){
+           return AjaxResult.error(e.getMessage());
+       }
+        return AjaxResult.success();
     }
+
     @RequestMapping("/logout")
-    public String logout(HttpSession session){
+    public String logout(HttpSession session) {
         //清除session
-        session.invalidate();
+//        session.invalidate();
+        SecurityUtils.getSubject().logout();
         return "redirect:/login";
+    }
+
+    @RequestMapping("/error")
+    public String nopermisson() {
+        return "common/nopermission";
     }
 
 }

@@ -20,5 +20,7 @@ public interface EmployeeService {
 
     Employee login(Employee employee);
 
+    Employee selectByName(String username);
+
 
 }

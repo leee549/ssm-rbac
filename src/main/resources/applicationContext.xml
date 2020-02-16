@@ -68,4 +68,7 @@
         <aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut"/>
     </aop:config>
 
+    <!--配置全局异常解析器-->
+    <bean id="globalExceptionResolver" class="cn.lhx.exception.GlobalExceptionResolver"/>
+
 </beans>

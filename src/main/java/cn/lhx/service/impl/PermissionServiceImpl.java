@@ -9,7 +9,9 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class PermissionServiceImpl implements PermissionService {
@@ -28,5 +30,22 @@ public class PermissionServiceImpl implements PermissionService {
         List<Permission> pms = permissionDao.listAll();
         PageInfo<Permission> pageInfo = new PageInfo<>(pms);
         return pageInfo;
+    }
+
+    @Override
+    public Set<String> queryAllExpression() {
+        List<Permission> pms = permissionDao.listAll();
+        Set<String> set = new HashSet<>();
+        for (Permission permission :pms){
+            set.add(permission.getExpression());
+        }
+        //pms.forEach(pm -> set.add(pm.getExpression()));
+        return set;
+
+    }
+
+    @Override
+    public Set<String> queryExpressionByEmployeeId(Long id) {
+        return permissionDao.selectByEmployeeId(id);
     }
 }

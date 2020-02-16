@@ -5,6 +5,7 @@ import cn.lhx.utils.page.QueryObject;
 import com.github.pagehelper.PageInfo;
 
 import java.util.List;
+import java.util.Set;
 
 public interface PermissionService {
 
@@ -12,4 +13,7 @@ public interface PermissionService {
 
     PageInfo<Permission> query(QueryObject qo);
 
+    Set<String> queryAllExpression();
+
+    Set<String> queryExpressionByEmployeeId(Long id);
 }

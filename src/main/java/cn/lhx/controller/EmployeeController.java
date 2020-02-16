@@ -7,6 +7,7 @@ import cn.lhx.service.EmployeeService;
 import cn.lhx.service.RoleService;
 import cn.lhx.utils.page.QueryObject;
 import com.github.pagehelper.PageInfo;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +26,7 @@ public class EmployeeController {
     @Resource
     private RoleService roleService;
 
+    @RequiresPermissions("employee:list")
     @RequestMapping("/list")
     public String listAll(Model model, QueryObject qo) {
 
@@ -34,7 +36,7 @@ public class EmployeeController {
         model.addAttribute("depts", depts);
         return "employee/list";
     }
-
+    @RequiresPermissions("employee:saveOrUpdate")
     @RequestMapping("/saveOrUpdate")
     public String saveOrUpdate(Employee employee,Long[] ids) {
         if (employee.getId() != null) {
@@ -52,6 +54,7 @@ public class EmployeeController {
      * @return
      */
     @RequestMapping("/input")
+    @RequiresPermissions("employee:input")
     public String input(Integer id, Model model) {
         if (id != null) {
             Employee emp = employeeService.selectById(id);
@@ -67,6 +70,7 @@ public class EmployeeController {
      * @return
      */
     @RequestMapping("/delete/{id}")
+    @RequiresPermissions("employee:delete")
     public String delete(@PathVariable Integer id) {
         employeeService.deleteById(id);
         return "redirect:/employee/list";

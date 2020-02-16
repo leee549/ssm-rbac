@@ -119,5 +119,7 @@
     <insert id="insertRelation">
         insert into employee_role(employee_id, role_id) value(#{employeeId},#{roleId});
     </insert>
-
+    <select id="selectByName" resultMap="BaseResultMap" resultType="Employee">
+        select * from employee where name = #{name }
+    </select>
 </mapper>

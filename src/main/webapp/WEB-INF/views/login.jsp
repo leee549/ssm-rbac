@@ -22,12 +22,12 @@
         $(function () {
             $(".submitBtn").click(function () {
                 $.post("/auth/login", $("#loginForm").serialize(), function (data) {
-                    console.log(data);
-                    if (data) {
+
+                    if (data.ret == true) {
                         console.log(data);
                         window.location.href = "employee/list";
                     } else {
-                        alert(data);
+                        alert(data.msg);
                         window.location.href = "login";
                     }
                 })
@@ -45,7 +45,7 @@
 
         <form method="post" id="loginForm">
             <div class="form-group has-feedback">
-                <input type="text" class="form-control" placeholder="请输入账号" name="name" value="aa">
+                <input type="text" class="form-control" placeholder="请输入账号" name="name" value="admin">
                 <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
             </div>
             <div class="form-group has-feedback">

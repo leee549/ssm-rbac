@@ -27,6 +27,28 @@
     </filter-mapping>
 
 
+    <!--shiro启动配置-->
+    <!--1.在项目最外层 构建访问控制层
+        2.启动时，初始化shiro坏境
+        shiro过虑器，DelegatingFilterProxy通过代理模式将spring容器中的bean和filter关联起来
+     -->
+    <filter>
+        <filter-name>shiroFilter</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+        <!-- 设置true由servlet容器控制filter的生命周期 -->
+        <init-param>
+            <param-name>targetFilterLifecycle</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>shiroFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+
+
+
 
     <!--配置前端控制器-->
     <servlet>
@@ -42,4 +64,7 @@
         <servlet-name>springmvc</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
+
+
+
 </web-app>

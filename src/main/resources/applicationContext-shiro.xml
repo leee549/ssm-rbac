@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+      http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+
+    <!-- Shiro 的Web过滤器 -->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager"/>
+        <!--shiro过滤器已不处理，交给代理完成-->
+        <!--loginUrl认证提交地址，如果没有认证将会请求此地址进行认证，请求此地址将由formAuthenticationFilter进行表单认证-->
+        <!--<property name="loginUrl" value="/login" />-->
+        <!--&lt;!&ndash; 通过unauthoeizedUrl 指定没有权限操作时跳转页面 &ndash;&gt;-->
+        <!--<property name="unauthorizedUrl" value="/refuse.jsp" />-->
+        <!--过虑器链定义，从上向下顺序执行，一般将/**放在最下边-->
+        <!--<property name="filterChainDefinitions">-->
+        <!--<value>-->
+        <!--&lt;!&ndash;&lt;!&ndash; 退出拦截，请求logout.action执行退出操作 &ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;/logout.action = logout&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash; 无权访问页面 &ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;/refuse.jsp = anon&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash; roles[XX]表示有XX角色才可访问 &ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;/item/list.action = roles[item],authc&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;对静态资源的匿名访问&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;/js/** anon&ndash;&gt;-->
+        <!--&lt;!&ndash;/images/** anon&ndash;&gt;-->
+        <!--&lt;!&ndash;/styles/** anon&ndash;&gt;-->
+        <!--&lt;!&ndash;/validatecode.jsp anon&ndash;&gt;-->
+        <!--&lt;!&ndash;/item/* authc&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash; user表示身份认证通过或通过记住我认证通过的可以访问 &ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;/** = authc&ndash;&gt;-->
+        <!--</value>-->
+        <!--</property>-->
+    </bean>
+    <!-- 密码匹配器 -->
+    <bean id="credentialsMatcher"
+          class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+        <property name="hashAlgorithmName" value="md5"/>
+        <property name="hashIterations" value="10000"/>
+    </bean>
+
+
+    <!-- 自定义 realm -->
+    <bean id="myRealm" class="cn.lhx.security.shiro.realm.MyRealm">
+        <property name="credentialsMatcher" ref="credentialsMatcher"/>
+    </bean>
+    <!-- 安全管理器 -->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="myRealm"/>
+        <property name="rememberMeManager" ref="rememberMeManager"/>
+        <property name="sessionManager" ref="sessionManager"/>
+    </bean>
+
+    <!--记住我的cookie-->
+    <bean id="rememberMeCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+        <property name="name" value="rememberMe"/>
+        <!--cookie只在http请求中可用 防止js脚本读取cookie信息被窃取-->
+        <property name="httpOnly" value="true"/>
+        <property name="maxAge" value="604800"/>  <!-- 7天 -->
+    </bean>
+
+    <!--记住我管理器-->
+    <bean id="rememberMeManager" class="org.apache.shiro.web.mgt.CookieRememberMeManager">
+        <property name="cookie" ref="rememberMeCookie"/>
+    </bean>
+
+
+    <!-- 会话管理器 -->
+    <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+        <!-- session的失效时长，单位毫秒，30分钟 -->
+        <property name="globalSessionTimeout" value="180000"/>
+        <!-- 删除失效的session -->
+        <property name="deleteInvalidSessions" value="true"/>
+    </bean>
+
+    <!--<bean id="defaultAdvisorAutoProxyCreator"-->
+          <!--class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"-->
+          <!--depends-on="lifecycleBeanPostProcessor">-->
+        <!--<property name="proxyTargetClass" value="true"/>-->
+    <!--</bean>-->
+
+
+
+
+
+    <!--权限注解的advisor 匹配所有类，匹配所有加了认证注解的方法
+    在此bean的构建过程中初始化了一些额外功能和pointcut
+      (RoleAnnotationMethodInterceptor(resolver));
+      (PermissionAnnotationMethodInterceptor(resolver));
+      (AuthenticatedAnnotationMethodInterceptor(resolver));
+      (UserAnnotationMethodInterceptor(resolver));
+      (GuestAnnotationMethodInterceptor(resolver));
+    -->
+
+
+
+</beans>

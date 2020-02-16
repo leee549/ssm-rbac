@@ -48,4 +48,12 @@
 
     </select>
 
+    <select id="querySnByEmployeeId" resultMap="BaseResultMap">
+        select r.id, r.name,r.sn
+        from role r
+                 left join employee_role er on r.id = er.role_id
+        where er.employee_id = #{id}
+
+    </select>
+
 </mapper>

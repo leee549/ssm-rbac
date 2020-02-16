@@ -5,6 +5,7 @@ import cn.lhx.utils.page.QueryObject;
 import com.github.pagehelper.PageInfo;
 
 import java.util.List;
+import java.util.Set;
 
 public interface RoleService {
 
@@ -14,4 +15,7 @@ public interface RoleService {
     List<Role> listAll();
 
     Role selectById(Long id);
+
+
+    Set<String> querySnByEmployeeId(Long id);
 }

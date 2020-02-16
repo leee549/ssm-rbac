@@ -76,4 +76,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee login(Employee employee) {
         return employeeDao.login(employee);
     }
+
+    @Override
+    public Employee selectByName(String username) {
+        return employeeDao.selectByName(username);
+    }
 }

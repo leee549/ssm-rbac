@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class RoleServiceImpl implements RoleService {
@@ -36,4 +37,11 @@ public class RoleServiceImpl implements RoleService {
     public Role selectById(Long id) {
         return roleDao.selectById(id);
     }
+
+    @Override
+    public Set<String> querySnByEmployeeId(Long id) {
+        return roleDao.querySnByEmployeeId(id);
+    }
+
+
 }

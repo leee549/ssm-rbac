@@ -24,4 +24,11 @@ public interface EmployeeDao {
     void insertRelation(@Param("employeeId")Long employeeId, @Param("roleId")Long roleId);
     // 删除旧的员工-角色关系
     void deleteRelation(@Param("employeeId")Long id);
+
+    /**
+     * 获取登录用户名
+     * @param name
+     * @return
+     */
+    Employee selectByName(String name);
 }

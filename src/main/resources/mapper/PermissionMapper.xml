@@ -10,4 +10,15 @@
     <select id="listAll" resultMap="BaseResultMap">
             select id,name,expression from permission
     </select>
+
+
+    <select id="selectByEmployeeId" resultMap="BaseResultMap">
+        SELECT
+            DISTINCT p.expression
+        FROM permission p
+                 LEFT JOIN role_permission rp ON rp.permission_id = p.id
+                 LEFT JOIN employee_role er ON er.role_id = rp.role_id
+        WHERE er.employee_id = #{employeeId}
+    </select>
+
 </mapper>
