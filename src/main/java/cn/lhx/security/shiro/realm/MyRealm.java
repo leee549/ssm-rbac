@@ -11,6 +11,7 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
@@ -66,14 +67,19 @@ public class MyRealm extends AuthorizingRealm {
         //查询数据库用户名
         Employee employee = employeeService.selectByName(username);
 
+        // 干啥用的？
+        String salt = employee.getId().toString();
+
         if (employee == null) {
             throw new UnknownAccountException("用户:" + username + "不存在");
         }
 
+        // 没看懂，这不是要增加人吗，不是登录
 
-        // ByteSource.Util.bytes 盐
+
         return new SimpleAuthenticationInfo(employee,
                 employee.getPassword(),
+                 ByteSource.Util.bytes(salt),
                 getName());
     }
 }

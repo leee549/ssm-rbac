@@ -5,6 +5,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.lhx.dao.EmployeeDao;
 import cn.lhx.entity.Employee;
 import cn.lhx.service.EmployeeService;
+import cn.lhx.utils.Md5Util;
 import cn.lhx.utils.page.QueryObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -42,13 +43,21 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public void save(Employee employee, Long[] ids) {
+        // 你到这里的时候，还没插入，自增id 就还没有
         employeeDao.insert(employee);
+        // 加密
+        String salt = employee.getId().toString();
+
+        employee.setPassword(Md5Util.encode(employee.getPassword(), salt));
+        // 更新加密后的密码
+        this.employeeDao.updatePwd(employee);
         if (ids != null) {
             for (Long roleId : ids) {
                 employeeDao.insertRelation(employee.getId(), roleId);
             }
         }
     }
+
 
     @Override
     public void update(Employee employee, Long[] ids) {

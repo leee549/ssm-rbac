@@ -31,4 +31,10 @@ public interface EmployeeDao {
      * @return
      */
     Employee selectByName(String name);
+
+    /**
+     * 注册时更新加密后的密码
+     * @param employee
+     */
+    void updatePwd(Employee employee);
 }

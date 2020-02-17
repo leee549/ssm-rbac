@@ -87,6 +87,16 @@
             dept_id=#{deptId}
         WHERE id = #{id}
     </update>
+    <update id="updatePwd">
+        UPDATE employee
+        SET name=#{name},
+            password=#{password},
+            email=#{email},
+            age=#{age},
+            admin=#{admin},
+            dept_id=#{deptId}
+        WHERE id = #{id}
+    </update>
 
     <delete id="deleteById" parameterType="int">
         DELETE FROM employee WHERE id=#{id}

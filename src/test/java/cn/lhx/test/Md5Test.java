@@ -12,8 +12,9 @@ import java.util.UUID;
 public class Md5Test {
     public static void main(String[] args) {
         String pwd = "1";
-        String id = "1";
-        String s = new Md5Hash(id,pwd,10000).toString();
+        Object salt = 1L;
+
+        String s = new Md5Hash(pwd,salt,10000).toString();
         System.out.println(s);
 
 

@@ -9,10 +9,12 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -27,10 +29,11 @@ public class LoginController {
 
     @ResponseBody
     @PostMapping("/auth/login")
-    public AjaxResult login(Employee employee) {
+    public AjaxResult login(Employee employee, HttpServletRequest request) {
 
        try {
            Subject subject = SecurityUtils.getSubject();
+           request.getSession().setAttribute("user",employee.getName());
            UsernamePasswordToken token =
                    new UsernamePasswordToken(employee.getName(),
                            employee.getPassword(),

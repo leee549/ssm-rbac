@@ -13,7 +13,7 @@
     <ul class="nav navbar-nav navbar-right cm-navbar-nav ">
         <li>
            <p class="navbar-text text-info">
-               <span class="glyphicon glyphicon-user">${sessionScope.user.name}</span>
+               <span class="glyphicon glyphicon-user">${sessionScope.user}</span>
 
            </p>
         </li>
