@@ -14,4 +14,6 @@ public interface RoleDao {
 
 
     Set<String> querySnByEmployeeId(Long id);
+
+    void deleteById(Integer id);
 }

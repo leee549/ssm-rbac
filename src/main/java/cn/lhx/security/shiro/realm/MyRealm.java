@@ -67,15 +67,12 @@ public class MyRealm extends AuthorizingRealm {
         //查询数据库用户名
         Employee employee = employeeService.selectByName(username);
 
-        // 干啥用的？
+        // 定义盐
         String salt = employee.getId().toString();
 
         if (employee == null) {
             throw new UnknownAccountException("用户:" + username + "不存在");
         }
-
-        // 没看懂，这不是要增加人吗，不是登录
-
 
         return new SimpleAuthenticationInfo(employee,
                 employee.getPassword(),

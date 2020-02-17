@@ -43,5 +43,20 @@ public class RoleServiceImpl implements RoleService {
         return roleDao.querySnByEmployeeId(id);
     }
 
+    @Override
+    public void deleteById(Integer id) {
+        roleDao.deleteById(id);
+    }
+
+    @Override
+    public void update(Role role, Long[] ids) {
+        return;
+    }
+
+    @Override
+    public void save(Role role, Long[] ids) {
+        return;
+    }
+
 
 }

@@ -8,6 +8,7 @@ import com.github.pagehelper.PageInfo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
@@ -38,5 +39,21 @@ public class RoleController {
         }
         model.addAttribute("permissions", permissionService.listAll());
         return "role/input";
+    }
+
+    @RequestMapping("/delete/{id}")
+    @RequiresPermissions("role:delete")
+    public String delete(@PathVariable Integer id){
+        roleService.deleteById(id);
+        return "redirect:/role/list";
+    }
+    @RequestMapping("saveOrUpdate")
+    public String saveOrUpdate(Role role ,Long[] ids){
+        if (role.getId() != null){
+            roleService.update(role,ids);
+        }else {
+            roleService.save(role,ids);
+        }
+        return "redirect:/role/list";
     }
 }

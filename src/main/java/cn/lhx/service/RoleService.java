@@ -18,4 +18,10 @@ public interface RoleService {
 
 
     Set<String> querySnByEmployeeId(Long id);
+
+    void deleteById(Integer id);
+
+    void update(Role role, Long[] ids);
+
+    void save(Role role, Long[] ids);
 }

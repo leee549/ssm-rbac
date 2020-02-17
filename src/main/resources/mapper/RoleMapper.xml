@@ -10,7 +10,7 @@
 
     </resultMap>
 
-    <delete id="deleteByPrimaryKey">
+    <delete id="deleteById">
         delete
         from role
         where id = #{id}
