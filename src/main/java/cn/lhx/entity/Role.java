@@ -15,6 +15,6 @@ public class Role {
     private Long id;
     private String name;
     private String sn;
-    private List<Permission> pers = new ArrayList<Permission>();
+    private List<Permission> permissions;
 
 }

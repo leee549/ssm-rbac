@@ -1,5 +1,6 @@
 package cn.lhx.service;
 
+import cn.lhx.entity.Permission;
 import cn.lhx.entity.Role;
 import cn.lhx.utils.page.QueryObject;
 import com.github.pagehelper.PageInfo;
@@ -24,4 +25,6 @@ public interface RoleService {
     void update(Role role, Long[] ids);
 
     void save(Role role, Long[] ids);
+
+    List<Permission> selectPermissionById(Long id);
 }

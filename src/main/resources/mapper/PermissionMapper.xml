@@ -7,6 +7,15 @@
         <result column="expression" property="expression"/>
     </resultMap>
 
+
+    <!--多对多查询-->
+    <select id="selectByRoleId" resultMap="BaseResultMap">
+        select p.id, p.name,p.expression from permission p
+                left join  role_permission rp     on p.id = rp.permission_id
+            where rp.role_id=#{id}
+
+    </select>
+
     <select id="listAll" resultMap="BaseResultMap">
             select id,name,expression from permission
     </select>
@@ -20,5 +29,7 @@
                  LEFT JOIN employee_role er ON er.role_id = rp.role_id
         WHERE er.employee_id = #{employeeId}
     </select>
+
+
 
 </mapper>

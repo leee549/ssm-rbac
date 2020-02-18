@@ -66,10 +66,12 @@
                             </div>
                             <div class="col-sm-4">
                                 <select multiple class="form-control selfPermissions" size="15" name="ids">
-                                    回显当前角色拥有的权限
-                                        <c:forEach var="permission" items="${role.pers}">
-                                            <option value="${permission.id}">${permission.name}</option>
+                                    <%--回显当前角色拥有的权限--%>
+
+                                        <c:forEach var="p" items="${role.permissions}">
+                                            <option value="${p.id}">${p.name}</option>
                                         </c:forEach>
+
                                 </select>
                             </div>
                         </div>

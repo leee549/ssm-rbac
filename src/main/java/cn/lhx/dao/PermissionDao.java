@@ -12,4 +12,6 @@ public interface PermissionDao {
     Set<String> queryAllExpression();
 
     Set<String> selectByEmployeeId(Long id);
+
+    List<Permission> selectByRoleId(Long id);
 }

@@ -1,6 +1,7 @@
 package cn.lhx.service.impl;
 
 import cn.lhx.dao.RoleDao;
+import cn.lhx.entity.Permission;
 import cn.lhx.entity.Role;
 import cn.lhx.service.RoleService;
 import cn.lhx.utils.page.QueryObject;
@@ -50,12 +51,28 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public void update(Role role, Long[] ids) {
-        return;
+        roleDao.deleteRelation(role.getId());
+        roleDao.updateByPrimaryKey(role);
+        if (ids != null){
+            for (Long id : ids){
+                roleDao.insertRelation(role.getId(),id);
+            }
+        }
     }
 
     @Override
     public void save(Role role, Long[] ids) {
-        return;
+        roleDao.insert(role);
+        if (ids != null){
+            for (Long permissionId : ids){
+            roleDao.insertRelation(role.getId(),permissionId);
+            }
+        }
+    }
+
+    @Override
+    public List<Permission> selectPermissionById(Long id) {
+        return roleDao.selectPermissionByid(id);
     }
 
 
