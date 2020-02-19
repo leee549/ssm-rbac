@@ -9,11 +9,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class QueryObject {
 
-    /*分页相关*/
+    /**
+     * 分页相关
+     * */
     private int currentPage=1;
     private int pagesize=5;
 
-    /*封装高级查询条件*/
+    /**
+     *  封装高级查询条件
+     */
     private String keyword;
     private Long deptId;
 

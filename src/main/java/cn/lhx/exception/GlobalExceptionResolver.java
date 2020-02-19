@@ -1,6 +1,7 @@
 package cn.lhx.exception;
 
 import cn.hutool.core.exceptions.ExceptionUtil;
+import cn.lhx.base.AjaxResult;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -23,12 +24,7 @@ public class GlobalExceptionResolver implements HandlerExceptionResolver {
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
         ModelAndView mv = new ModelAndView();
         log.info("test:" + ExceptionUtil.stacktraceToOneLineString(ex));
-        if (ex instanceof IncorrectCredentialsException || ex instanceof UnknownAccountException) {
-            //跳转登录页面，重新登录
-
-            mv.setViewName("login");
-            log.info("Exception {}", 123);
-        } else if (ex instanceof UnauthorizedException) {
+        if (ex instanceof UnauthorizedException) {
             //角色 权限不足
             //跳转权限不足的页面
             mv.setViewName("redirect:/error");

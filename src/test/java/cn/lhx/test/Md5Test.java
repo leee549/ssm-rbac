@@ -14,7 +14,7 @@ public class Md5Test {
         String pwd = "1";
         Object salt = 1L;
 
-        String s = new Md5Hash(pwd,salt,10000).toString();
+        String s = new Md5Hash(pwd, salt, 10000).toString();
         System.out.println(s);
 
 
@@ -24,5 +24,8 @@ public class Md5Test {
 //        System.out.println(s3);
 //        System.out.println(s4);
 
+
+
     }
+    
 }

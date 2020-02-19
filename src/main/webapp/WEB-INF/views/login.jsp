@@ -22,8 +22,8 @@
         $(function () {
             $(".submitBtn").click(function () {
                 $.post("/auth/login", $("#loginForm").serialize(), function (data) {
-
-                    if (data.ret == true) {
+                    console.log("up:"+data);
+                    if (data.ret === true) {
                         console.log(data);
                         window.location.href = "employee/list";
                     } else {

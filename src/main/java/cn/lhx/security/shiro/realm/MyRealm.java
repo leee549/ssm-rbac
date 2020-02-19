@@ -1,11 +1,10 @@
 package cn.lhx.security.shiro.realm;
 
-import cn.hutool.core.exceptions.ExceptionUtil;
+import cn.hutool.core.util.ObjectUtil;
 import cn.lhx.entity.Employee;
 import cn.lhx.service.EmployeeService;
 import cn.lhx.service.PermissionService;
 import cn.lhx.service.RoleService;
-import cn.lhx.utils.Md5Util;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -49,7 +48,7 @@ public class MyRealm extends AuthorizingRealm {
             info.setStringPermissions(permissionService.queryExpressionByEmployeeId(employee.getId()));
         }
         //设置角色
-         info.setRoles(roleService.querySnByEmployeeId(employee.getId()));
+        info.setRoles(roleService.querySnByEmployeeId(employee.getId()));
         return info;
     }
 
@@ -63,20 +62,21 @@ public class MyRealm extends AuthorizingRealm {
             throws AuthenticationException {
         //获取用户输入的用户名
         String username = (String) token.getPrincipal();
-
         //查询数据库用户名
         Employee employee = employeeService.selectByName(username);
 
-        // 定义盐
-        String salt = employee.getId().toString();
+        if (ObjectUtil.isEmpty(employee)) {
 
-        if (employee == null) {
             throw new UnknownAccountException("用户:" + username + "不存在");
         }
 
+        // 定义盐(你这顺序不能乱放)
+        String salt = employee.getId().toString();
+
         return new SimpleAuthenticationInfo(employee,
                 employee.getPassword(),
-                 ByteSource.Util.bytes(salt),
+                ByteSource.Util.bytes(salt),
                 getName());
+
     }
 }

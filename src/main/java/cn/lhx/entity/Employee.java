@@ -5,8 +5,7 @@ import lombok.*;
 import java.util.List;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 public class Employee {
 
     private Long id;
