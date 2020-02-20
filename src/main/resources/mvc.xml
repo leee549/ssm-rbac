@@ -19,9 +19,9 @@
     <!--配置注解驱动-->
     <mvc:annotation-driven/>
     <!--过滤静态资源-->
-    <mvc:resources location="/js/" mapping="/js/**"/>
-    <mvc:resources location="/css/" mapping="/css/**"/>
-    <mvc:resources location="/images/" mapping="/images/**"/><!--location为静态资源本地路径-->
+    <!--<mvc:resources location="/js/" mapping="/js/**"/>-->
+    <!--<mvc:resources location="/css/" mapping="/css/**"/>-->
+    <!--<mvc:resources location="/images/" mapping="/images/**"/>&lt;!&ndash;location为静态资源本地路径&ndash;&gt;-->
     <!--<mvc:interceptors>-->
         <!--<mvc:interceptor>-->
             <!--&lt;!&ndash; 拦截所有mvc控制器 &ndash;&gt;-->

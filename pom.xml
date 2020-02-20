@@ -163,7 +163,12 @@
             <artifactId>spring-aspects</artifactId>
             <version>4.3.6.RELEASE</version>
         </dependency>
-
+        <!--验证码框架-->
+        <dependency>
+            <groupId>com.github.whvcse</groupId>
+            <artifactId>easy-captcha</artifactId>
+            <version>1.6.2</version>
+        </dependency>
 
 
 
