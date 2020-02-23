@@ -41,6 +41,7 @@ public class MyRealm extends AuthorizingRealm {
         Boolean isAdmin = employee.getAdmin();
 
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+        System.out.println(isAdmin);
         //设置权限
         if (isAdmin) {
             info.setStringPermissions(permissionService.queryAllExpression());

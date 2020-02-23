@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-      http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+      http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
 
 
     <!-- Shiro 的Web过滤器 -->
@@ -12,27 +15,16 @@
         <!--loginUrl认证提交地址，如果没有认证将会请求此地址进行认证，请求此地址将由formAuthenticationFilter进行表单认证-->
         <!--<property name="loginUrl" value="/login" />-->
         <!--&lt;!&ndash; 通过unauthoeizedUrl 指定没有权限操作时跳转页面 &ndash;&gt;-->
-        <!--<property name="unauthorizedUrl" value="/refuse.jsp" />-->
+        <!--<property name="unauthorizedUrl" value="/nopermission.jsp" />-->
         <!--过虑器链定义，从上向下顺序执行，一般将/**放在最下边-->
         <property name="filterChainDefinitions">
         <value>
-
-        /login.jsp= anon
-        /common/error.jsp= anon
         /captcha = anon
         /login/** =anon
         /error = anon
-        <!--&lt;!&ndash; roles[XX]表示有XX角色才可访问 &ndash;&gt;-->
-        <!--/item/list.action = roles[item],authc-->
-        <!--对静态资源的匿名访问-->
-        /js/** anon
-        /css/** anon
-        /images/** anon
-        /styles/** anon
-        /validatecode.jsp anon
-        <!--/item/* authc-->
-        <!-- user表示身份认证通过或通过记住我认证通过的可以访问 -->
-        <!--/** = authc-->
+        /logout =anon
+     <!--user表示身份认证通过或通过记住我认证通过的可以访问 -->
+         <!--/** =user-->
         </value>
         </property>
     </bean>
@@ -76,6 +68,8 @@
         <!-- 删除失效的session -->
         <property name="deleteInvalidSessions" value="true"/>
     </bean>
+
+
 
     <!--<bean id="defaultAdvisorAutoProxyCreator"-->
           <!--class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"-->

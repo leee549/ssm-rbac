@@ -26,8 +26,19 @@
             //     verKey = res.key;
             //     $('#verImg').attr('src', res.image);
             // },'json');
+            //页面回退刷新
+            window.onload = function () {
+                if (window.name == "hasLoad") {
+                    location.reload();
+                    window.name = "";
+                } else {
+                    window.name = "hasLoad";
+                }
+            }
 
-            $(".submitBtn").click(function () {
+
+
+                $(".submitBtn").click(function () {
                 $.post("/auth/login", $("#loginForm").serialize(), function (data) {
                     console.log("up:"+data);
                     if (data.ret === true) {

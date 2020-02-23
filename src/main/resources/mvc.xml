@@ -18,10 +18,10 @@
     <import resource="applicationContext.xml"/>
     <!--配置注解驱动-->
     <mvc:annotation-driven/>
-    <!--过滤静态资源-->
-    <!--<mvc:resources location="/js/" mapping="/js/**"/>-->
-    <!--<mvc:resources location="/css/" mapping="/css/**"/>-->
-    <!--<mvc:resources location="/images/" mapping="/images/**"/>&lt;!&ndash;location为静态资源本地路径&ndash;&gt;-->
+    <!--&lt;!&ndash;过滤静态资源&ndash;&gt;-->
+    <mvc:resources location="/js/" mapping="/js/**"/>
+    <mvc:resources location="/css/" mapping="/css/**"/>
+    <mvc:resources location="/images/" mapping="/images/**"/><!--location为静态资源本地路径-->
     <!--<mvc:interceptors>-->
         <!--<mvc:interceptor>-->
             <!--&lt;!&ndash; 拦截所有mvc控制器 &ndash;&gt;-->
@@ -55,6 +55,5 @@
     <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
         <property name="securityManager" ref="securityManager"/>
     </bean>
-
 
 </beans>

@@ -43,6 +43,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public void save(Employee employee, Long[] ids) {
+        setAdmin(employee);
         // 你到这里的时候，还没插入，自增id 就还没有
         employeeDao.insert(employee);
         // 加密
@@ -61,6 +62,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public void update(Employee employee, Long[] ids) {
+        setAdmin(employee);
         employeeDao.update(employee);
         if (ids != null) {
             employeeDao.deleteRelation(employee.getId());
@@ -70,6 +72,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
 
     }
+
 
     @Override
     public Employee selectById(Integer id) {
@@ -89,5 +92,13 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee selectByName(String username) {
         return employeeDao.selectByName(username);
+    }
+
+    private void setAdmin(Employee employee) {
+        if (employee.getAdmin() == null || !employee.getAdmin()) {
+            employee.setAdmin(false);
+        } else {
+            employee.setAdmin(true);
+        }
     }
 }
