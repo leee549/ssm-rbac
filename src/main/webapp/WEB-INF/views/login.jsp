@@ -27,14 +27,7 @@
             //     $('#verImg').attr('src', res.image);
             // },'json');
             //页面回退刷新
-            window.onload = function () {
-                if (window.name == "hasLoad") {
-                    location.reload();
-                    window.name = "";
-                } else {
-                    window.name = "hasLoad";
-                }
-            }
+
 
 
 
@@ -50,6 +43,8 @@
                     }
                 })
             })
+
+
         });
     </script>
 </head>

@@ -151,7 +151,7 @@
             <version>${shiro.version}</version>
         </dependency>
 
-        <!--shiro与spring集成-->
+        <!--shiro与spring集成  会导入shiro core 和shiro web-->
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-spring</artifactId>

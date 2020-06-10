@@ -29,7 +29,6 @@ public class EmployeeController {
     @RequiresPermissions("employee:list")
     @RequestMapping("/list")
     public String listAll(Model model, QueryObject qo) {
-
         PageInfo<Employee> result = employeeService.query(qo);
         List<Department> depts = departmentService.listAll();
         model.addAttribute("result", result);
